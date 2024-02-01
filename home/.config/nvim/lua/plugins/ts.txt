@@ -1,0 +1,423 @@
+return {
+  -- yanky and sqlite are managed as LazyVim extras
+  -- but you need to initialize yanky on your own
+local dependencies = {
+  'nvim-tree/nvim-web-devicons',
+}
+local opts = {
+  ---Add a space b/w comment and the line
+  padding = true,
+return {
+	"zbirenbaum/copilot.lua",
+  enabled = false,
+return {
+  {
+    "nvimdev/dashboard-nvim",
+local opts = {
+  hooks = {
+    diff_buf_read = function(bufnr)
+return {
+  "lewis6991/gitsigns.nvim",
+  lazy = false,
+return {
+	"m4xshen/hardtime.nvim",
+	command = "Hardtime",
+return {
+  {
+    "lukas-reineke/indent-blankline.nvim",
+return {
+	{ "folke/neoconf.nvim", cmd = "Neoconf" },
+	{ "folke/neodev.nvim", },
+local dependencies = {
+  "tpope/vim-repeat"
+}
+return {
+	"glepnir/lspsaga.nvim",
+	lazy = false,
+local config = function()
+	require("lualine").setup({
+		options = {
+local opts = {
+	ensure_installed = {
+		"awk_ls",
+local opts = {
+  ui = {
+    icons = {
+
+local config = function ()
+  require("mini.ai").setup()
+return {
+	{
+		"nvim-neorg/neorg",
+return {
+	"folke/noice.nvim",
+	event = "VeryLazy",
+return {
+	"windwp/nvim-autopairs",
+	event = "InsertEnter",
+return {
+	"hrsh7th/nvim-cmp",
+	config = function()
+config = {
+  function()
+end,
+local on_attach = require("util.lsp").on_attach
+local diagnostic_signs = require("util.lsp").diagnostic_signs
+
+return {
+  'rcarriga/nvim-notify',
+  lazy = false,
+local keys = {
+  { 'n', '<leader>S', '<cmd>lua require("spectre").toggle()<CR>', { desc = "Toggle Spectre" } },
+  { 'n', '<leader>sw', '<cmd>lua require("spectre").open_visual({select_word=true})<CR>', { desc = "Search current word" } },
+config = {
+  function()
+    require("nvim-surround").setup({
+return {
+	"nvim-tree/nvim-tree.lua",
+	lazy = false,
+local config = function()
+	require("nvim-treesitter.configs").setup({
+		build = ":TSUpdate",
+return {
+	"windwp/nvim-ts-autotag",
+	lazy = false,
+return {
+  'nvim-tree/nvim-web-devicons'
+}
+return {
+  'nvim-lua/plenary.nvim',
+  enabled = true,
+return {
+  {
+    "https://gitlab.com/HiPhish/rainbow-delimiters.nvim",
+local keys = {
+  { 'n', '<leader>Zn', '<cmd>SudaRead<CR>', { desc = "Sudo read file" } },
+  { 'n', '<leader>Zw', '<cmd>SudaWrite<CR>', { desc = "Sudo write file" } },
+return {
+	"roobert/tailwindcss-colorizer-cmp.nvim",
+	-- optionally, override the default options:
+local mapkey = require("util.keymapper").mapkey
+
+local config = function()
+return {
+	"catppuccin/nvim",
+	lazy = false,
+return {
+  "christoomey/vim-tmux-navigator",
+  lazy = false,
+return {
+	"folke/trouble.nvim",
+	dependencies = { "nvim-tree/nvim-web-devicons" },
+return {
+	"pocco81/true-zen.nvim",
+	lazy = false,
+return {
+  -- yanky and sqlite are managed as LazyVim extras
+  -- but you need to initialize yanky on your own
+return {
+	"machakann/vim-highlightedyank",
+	lazy = false,
+return {
+	"RRethy/vim-illuminate",
+	lazy = false,
+local config = {
+  function ()
+    local wk = require("which-key")
+return {
+  -- yanky and sqlite are managed as LazyVim extras
+  -- but you need to initialize yanky on your own
+
+
+
+
+local dependencies = {
+  'nvim-tree/nvim-web-devicons',
+}
+
+
+
+
+local opts = {
+  ---Add a space b/w comment and the line
+  padding = true,
+
+
+
+
+return {
+	"zbirenbaum/copilot.lua",
+  enabled = false,
+
+
+
+
+return {
+  {
+    "nvimdev/dashboard-nvim",
+
+
+
+
+local opts = {
+  hooks = {
+    diff_buf_read = function(bufnr)
+
+
+
+
+return {
+  "lewis6991/gitsigns.nvim",
+  lazy = false,
+
+
+
+
+return {
+	"m4xshen/hardtime.nvim",
+	command = "Hardtime",
+
+
+
+
+return {
+  {
+    "lukas-reineke/indent-blankline.nvim",
+
+
+
+
+return {
+	{ "folke/neoconf.nvim", cmd = "Neoconf" },
+	{ "folke/neodev.nvim", },
+
+
+
+
+local dependencies = {
+  "tpope/vim-repeat"
+}
+
+
+
+
+return {
+	"glepnir/lspsaga.nvim",
+	lazy = false,
+
+
+
+
+local config = function()
+	require("lualine").setup({
+		options = {
+
+
+
+
+local opts = {
+	ensure_installed = {
+		"awk_ls",
+
+
+
+
+local opts = {
+  ui = {
+    icons = {
+
+
+
+
+
+local config = function ()
+  require("mini.ai").setup()
+
+
+
+
+return {
+	{
+		"nvim-neorg/neorg",
+
+
+
+
+return {
+	"folke/noice.nvim",
+	event = "VeryLazy",
+
+
+
+
+return {
+	"windwp/nvim-autopairs",
+	event = "InsertEnter",
+
+
+
+
+return {
+	"hrsh7th/nvim-cmp",
+	config = function()
+
+
+
+
+config = {
+  function()
+end,
+
+
+
+
+local on_attach = require("util.lsp").on_attach
+local diagnostic_signs = require("util.lsp").diagnostic_signs
+
+
+
+
+
+return {
+  'rcarriga/nvim-notify',
+  lazy = false,
+
+
+
+
+local keys = {
+  { 'n', '<leader>S', '<cmd>lua require("spectre").toggle()<CR>', { desc = "Toggle Spectre" } },
+  { 'n', '<leader>sw', '<cmd>lua require("spectre").open_visual({select_word=true})<CR>', { desc = "Search current word" } },
+
+
+
+
+config = {
+  function()
+    require("nvim-surround").setup({
+
+
+
+
+return {
+	"nvim-tree/nvim-tree.lua",
+	lazy = false,
+
+
+
+
+local config = function()
+	require("nvim-treesitter.configs").setup({
+		build = ":TSUpdate",
+
+
+
+
+return {
+	"windwp/nvim-ts-autotag",
+	lazy = false,
+
+
+
+
+return {
+  'nvim-tree/nvim-web-devicons'
+}
+
+
+
+
+return {
+  'nvim-lua/plenary.nvim',
+  enabled = true,
+
+
+
+
+return {
+  {
+    "https://gitlab.com/HiPhish/rainbow-delimiters.nvim",
+
+
+
+
+local keys = {
+  { 'n', '<leader>Zn', '<cmd>SudaRead<CR>', { desc = "Sudo read file" } },
+  { 'n', '<leader>Zw', '<cmd>SudaWrite<CR>', { desc = "Sudo write file" } },
+
+
+
+
+return {
+	"roobert/tailwindcss-colorizer-cmp.nvim",
+	-- optionally, override the default options:
+
+
+
+
+local mapkey = require("util.keymapper").mapkey
+
+local config = function()
+
+
+
+
+return {
+	"catppuccin/nvim",
+	lazy = false,
+
+
+
+
+return {
+  "christoomey/vim-tmux-navigator",
+  lazy = false,
+
+
+
+
+return {
+	"folke/trouble.nvim",
+	dependencies = { "nvim-tree/nvim-web-devicons" },
+
+
+
+
+return {
+	"pocco81/true-zen.nvim",
+	lazy = false,
+
+
+
+
+return {
+  -- yanky and sqlite are managed as LazyVim extras
+  -- but you need to initialize yanky on your own
+
+
+
+
+return {
+	"machakann/vim-highlightedyank",
+	lazy = false,
+
+
+
+
+return {
+	"RRethy/vim-illuminate",
+	lazy = false,
+
+
+
+
+local config = {
+  function ()
+    local wk = require("which-key")
+
+
+
+
+return {
+  -- yanky and sqlite are managed as LazyVim extras
+  -- but you need to initialize yanky on your own

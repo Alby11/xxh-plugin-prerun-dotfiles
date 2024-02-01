@@ -1,0 +1,149 @@
+# vim: filetype=zsh
+
+# Function to check for NOPASSWD privileges
+local check_nopasswd() {
+
+    # Use sudo in non-interactive mode to check for NOPASSWD
+    local sudo_output=$(SUDO_ASKPASS=/bin/false sudo -ln 2>/dev/null)
+
+    if [[ $sudo_output == *"(ALL) NOPASSWD: ALL"* ]] || [[ $sudo_output == *"NOPASSWD:"* ]]; then
+        return 0
+    else
+        return 1
+    fi
+}
+
+# If the user does not have NOPASSWD privileges, set SUDO_ASKPASS
+if ! check_nopasswd; then
+    export SUDO_ASKPASS=$(which ssh-askpass)
+    sudo -v
+fi
+
+#PACKAGE MANAGER
+# Check available package managers once and store the result
+[[ $(command -v dnf) ]] && has_dnf=1
+[[ $(command -v apt) ]] && has_apt=1
+[[ $(command -v pacman) ]] && has_pacman=1
+
+if [[ $has_dnf && ! $has_apt ]]; then
+  local packages=(
+    "ccze"
+    "clang"
+    "curl"
+    "fzf"
+    "gnome-tweaks"
+    "gnupg2"
+    "grc"
+    "golang"
+    "keychain"
+    "libcurl-devel"
+    "libnotify"
+    "libwnck*"
+    "lsb_release"
+    "luarocks"
+    "nodejs"
+    "nodejs-npm"
+    "perl"
+    "python-unversioned-command"
+    "python3-pip"
+    "shellcheck"
+    "shfmt"
+    "wl-clipboard"
+    "xclip"
+    "xorg-x11-server-Xwayland"
+    "xsel"
+  )
+  local package_groups=""
+  sudo dnf install -y "${packages[@]}" 
+  sudo dnf groupinstall -y "${package_groups[@]}"
+elif [[ $has_apt && ! $has_dnf ]]; then
+  # This tells debconf to use the noninteractive frontend, which doesn't ask any questions
+  export DEBIAN_FRONTEND=noninteractive
+  # Update package lists only if they are outdated
+  # Example: Check if '/var/lib/apt/periodic/update-success-stamp' is older than a day
+  if [[ $(find /var/lib/apt/periodic/update-success-stamp -mtime +1) ]]: then
+    sudo apt-get update
+  fi
+  local packages=(
+    "apt-file"
+    "apt-utils"
+    "ccze"
+    "clang-format"
+    "curl"
+    "fzf"
+    "gir*-wnck-*"
+    "gnome-tweaks"
+    "gnupg2"
+    "golang-go"
+    "gpg"
+    "grc"
+    "keychain"
+    "libnotify-bin"
+    "lsb-release"
+    "luarocks"
+    "nodejs"
+    "npm"
+    "perl"
+    "python-is-python3"
+    "python3-pip"
+    "shellcheck"
+    "shfmt"
+    "wl-clipboard"
+    "xclip"
+    "xsel"
+    "xwayland"
+  )
+  sudo apt-get install -y "${packages[@]}" 
+  # unset the DEBIAN_FRONTEND variable to avoid potential unintended consequences in future operations
+  unset DEBIAN_FRONTEND
+fi
+# CARGO
+if ! CHECK_COMMANDS rustup: then
+  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- --no-modify-path
+fi
+packages=(
+  "bat"
+  "eza"
+  "fd-find"
+  "gitui"
+  "grc-rs"
+  "lolcrab"
+  "ripgrep"
+  "vivid"
+  # "zellij"
+  "zoxide"
+)
+cargo install "${packages[@]}"
+ 
+# NPM
+packages=(
+  "@fsouza/prettierd"
+  "eslint"
+  "fixjson"
+  "neovim"
+  "solhint"
+)
+local -a missing_npm_packages
+for package in $npm_packages; do
+  if ! npm list -g "$package" >/dev/null 2>&1; then
+    missing_npm_packages+=("$package")
+  fi
+done
+if ((${#missing_npm_packages[@]} > 0)); then
+  sudo npm install -g ${missing_npm_packages[@]}
+fi
+# PIP
+packages=(
+  "autoenv"
+  "black"
+  "flake8"
+  "neovim"
+  "pip-install"
+  "thefuck"
+  "virtualenv"
+  "virtualenvwrapper"
+)
+sudo python -m pip install "${packages[@]}"
+
+ 
+unset has_apt has_dnf has_pacman packages package_groups check_nopasswd

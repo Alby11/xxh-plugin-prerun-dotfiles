@@ -1,0 +1,97 @@
+# vim: filetype=zsh
+
+#
+# .zeditor - Zsh file loaded to export editor, visual, pager ...
+#
+
+ECHOCAT '.zeditor - Zsh file loaded to export editor, visual, pager ...'
+
+#
+# Editors
+#
+
+export EDITOR="$(which vim > /dev/null 2>&1)"
+export VISUAL="$EDITOR"
+export PAGER="$(which less)"
+export MANPAGER="$PAGER"
+### Setting up less
+# Highlight section titles in manual pages.
+export LESS_TERMCAP_md="${yellow}"
+if CHECK_COMMANDS lesspipe.sh; then
+  lesspipe.sh | source /dev/stdin
+else
+  ECHOCAT 'LESSOPEN: lesspipe.sh in not installed or in PATH' -i
+fi
+# BAT
+if ! CHECK_COMMANDS bat; then
+  cargo install bat
+fi
+bat cache --build > /dev/null 2>&1
+# Ensure extended globbing is enabled
+setopt extended_glob
+# Define the directory and the base command
+local INSTALL_DIR="${HOME}/.local"
+local BASE_CMD="bat"
+# Define the suffixes
+local SUFFIXES=(diff grep man watch)
+# Flag to indicate if any file is missing
+local missing_file=false
+# Check each file individually
+for suffix in $SUFFIXES; do
+    if [[ ! -f "${INSTALL_DIR}/bin/${BASE_CMD}${suffix}" ]]; then
+        missing_file=true
+        break
+    fi
+done
+# If any file is missing, execute the installation steps
+if $missing_file; then
+  # Clone the repository
+  local CUR_DIR=$(pwd)
+  cd /tmp
+  git clone https://github.com/eth-p/bat-extras.git
+  cd bat-extras
+
+  # Build and install bat-extras
+  ./build.sh --minify=all --install --prefix="$INSTALL_DIR"
+
+  # Cleanup: Go back to the previous directory and remove the cloned repo
+  cd ..
+  rm -rf bat-extras
+  cd "$CUR_DIR"
+  unset CUR_DIR
+  # Notify the user
+  ECHOCAT "bat-extras installed successfully in $INSTALL_DIR"
+fi
+# Clean up environment variables
+unset INSTALL_DIR BASE_CMD SUFFIXES PATTERN
+# END OF BAT BLOCK
+# export LESSOPEN="|$(which batpipe) %s"
+export LESSOPEN="$(which batpipe) %s"
+# export LESSOPEN
+unset LESSCLOSE
+# The following will enable colors when using batpipe with less:
+export LESS="$LESS -R"
+export BATPIPE="color"
+# export LESS
+# Neovim nightly with bob
+if ! CHECK_COMMANDS nvim > /dev/null ; then
+  if ! CHECK_COMMANDS bob ; then
+    cargo install \
+      --git https://github.com/MordechaiHadad/bob.git \
+      --no-default-features \
+      --features native-tls
+    export PATH=$PATH:$HOME/.cargo/bin
+  fi
+  mkdir -p $HOME/.local/share/bash-completion/completions
+  bob complete bash > $HOME/.local/share/bash-completion/completions/bob
+  bob complete zsh > $ZDOTDIR/completions/_bob
+  export PATH=$PATH:$HOME/.local/share/bob/nvim-bin
+  bob use nightly
+  if ! CHECK_COMMANDS stylua;then
+    cargo install stylua
+  fi
+fi
+export EDITOR="${$(which nvim):-$EDITOR}"
+export VISUAL="${$(which nvim):-$VISUAL}"
+export PAGER="${$(which nvim):-$PAGER}"
+export MANPAGER="$(which nvim) -c 'Man!' -o -"

@@ -1,0 +1,1 @@
+/home/tallonea/.local/pipx/venvs/xxh-xxh/bin/xxh.zsh
